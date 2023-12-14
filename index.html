@@ -91,8 +91,10 @@
         // y軸の変化が2以上のときに歩数を増加
         var deltaY = Math.abs(aY - lastOrientation.y);
         if (deltaY > 1.4 && deltaY < 2) {
-          stepCount++;
-          document.getElementById("stepCount").innerText = stepCount/4;
+          stepCount+=0.25;
+          if(stepCount % 1 == 0){
+          document.getElementById("stepCount").innerText = stepCount;
+          }
         }
       }
 
