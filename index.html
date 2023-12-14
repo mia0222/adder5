@@ -59,6 +59,9 @@
       }).catch(function (e) {
         console.log(e);
       });
+
+      // 0.5秒ごとに歩数の条件を確認
+      setInterval(checkStepCount, 500);
     }
 
     function displayAcceleration() {
@@ -78,28 +81,29 @@
       document.getElementById("fb").innerText = fb.toFixed(2);
       document.getElementById("lr").innerText = lr.toFixed(2);
 
+      lastOrientation.alpha = dir;
+      lastOrientation.beta = fb;
+      lastOrientation.gamma = lr;
+      lastOrientation.y = aY;
+    }
+
+    function checkStepCount() {
       if (selectedMode === "normal") {
-        var deltaOrientation = Math.abs(dir - lastOrientation.alpha) +
-                               Math.abs(fb - lastOrientation.beta) +
-                               Math.abs(lr - lastOrientation.gamma);
+        var deltaOrientation = Math.abs(lastOrientation.alpha) +
+                               Math.abs(lastOrientation.beta) +
+                               Math.abs(lastOrientation.gamma);
 
         if (deltaOrientation > 180) {
           stepCount++;
           document.getElementById("stepCount").innerText = stepCount;
         }
       } else if (selectedMode === "smartphone") {
-        // y軸の変化が2以上のときに歩数を増加
         var deltaY = Math.abs(aY - lastOrientation.y);
-        if (deltaY > 1) {
+        if (deltaY > 2) {
           stepCount++;
           document.getElementById("stepCount").innerText = stepCount;
         }
       }
-
-      lastOrientation.alpha = dir;
-      lastOrientation.beta = fb;
-      lastOrientation.gamma = lr;
-      lastOrientation.y = aY;
     }
 
     function changeMode() {
