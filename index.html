@@ -90,7 +90,7 @@
       } else if (selectedMode === "smartphone") {
         // y軸の変化が2以上のときに歩数を増加
         var deltaY = Math.abs(aY - lastOrientation.y);
-        if (deltaY > 1.6 && deltaY < 2) {
+        if (deltaY > 1.4 && deltaY < 2) {
           stepCount++;
           document.getElementById("stepCount").innerText = stepCount/2;
         }
